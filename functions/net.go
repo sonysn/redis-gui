@@ -55,21 +55,25 @@ type RedisLogin struct {
 
 var RedisConn *redis.Client
 
-func ConnectToRedis(a *RedisLogin) {
+// TODO: HANDLE ERROR MESSAGES
+func ConnectToRedis(a *RedisLogin, isSaved bool) {
 	addr := fmt.Sprintf("%s:%s", a.Host, a.Port)
 	RedisConn = redis.NewClient(&redis.Options{
 		Addr:     addr,
-		Password: "", //a.Password, // no password set
-		DB:       0,  // use default DB,
+		Password: a.Password, //a.Password, // no password set
+		DB:       0,          // use default DB,
 	})
-	fmt.Println(addr)
+	// fmt.Println(addr)
 
 	_, err := RedisConn.Ping().Result()
 	if err != nil {
 		log.Println(err)
 		return
 	} else {
-		StoreDBCredentials(a)
+		if !isSaved {
+			StoreDBCredentials(a)
+		}
+		// StoreDBCredentials(a)
 		log.Println("Connected to Redis!")
 	}
 	// fmt.Println("Connected to Redis!")

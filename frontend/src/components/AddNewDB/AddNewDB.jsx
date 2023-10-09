@@ -12,9 +12,10 @@ function AddNewDB() {
         const databaseAliasValue = databaseAliasInput.value;
         const passwordValue = passwordInput.value;
         const usernameValue = usernameInput.value;
+        const isSaved = false;
         
         // console.log(portValue);
-        ConnectToRedisDB(hostValue, portValue, passwordValue, usernameValue, databaseAliasValue);
+        ConnectToRedisDB(hostValue, portValue, passwordValue, usernameValue, databaseAliasValue, isSaved);
     }
 
     return (

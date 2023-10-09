@@ -5,28 +5,30 @@ import AddNewDB from './components/AddNewDB/AddNewDB';
 import DatabaseList from './components/databaseList/DatabaseList';
 // import DatabaseList from './components/databaseList/DatabaseList';
 
-function Home(){
+function Home() {
     const [data, setData] = useState({});
 
     useEffect(() => {
         ReadDBCredentials().then((data) => {
-            parsedData = JSON.parse(data);
-            setData(parsedData);
+            // console.log("This is data", data);
+            // parsedData = JSON.parse(data);
+            setData(data);
         })
-        console.log("hbvhbvjhdv");
     }, []);
 
     var dataMap = Array.from(data)
-    console.log(dataMap);
-    console.log("hbvhbvjhdv");
+    // console.log("This is dataMap",dataMap[0].Host);
+    // console.log("hbvhbvjhdv");
 
-    return(
+    return (
         <div>
             <h1>My Redis Databases</h1>
             <button>+ ADD REDIS DATABASE</button>
             <textarea className='search'></textarea>
-            <DatabaseList databaseAlias='Database A' databaseHostNPort='localhost:6379' databasePassword='password' databaseUsername='username'/>
-            <AddNewDB/>
+            {dataMap.map(dataMap => {
+                return <DatabaseList databaseAlias={dataMap.DatabaseAlias} databaseHostNPort={dataMap.Host + ":" + dataMap.Port} databasePassword={dataMap.Password} databaseUsername={dataMap.Username} databaseHost={dataMap.Host} databasePort={dataMap.Port} />
+            })}
+            <AddNewDB />
         </div>
     );
 }

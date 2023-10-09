@@ -2,6 +2,7 @@ package functions
 
 import (
 	"bufio"
+	"bytes"
 	"fmt"
 	"log"
 	"os"
@@ -40,7 +41,7 @@ func ReadDBCredentials() []RedisLogin {
 
 	defer f.Close()
 
-	var login []RedisLogin
+	login := []RedisLogin{}
 
 	scanner := bufio.NewScanner(f)
 
@@ -61,4 +62,44 @@ func ReadDBCredentials() []RedisLogin {
 	}
 
 	return login
+}
+
+func DeleteDBCredentials(a *RedisLogin) (string, error) {
+	_, err := os.Stat(fileName)
+	if os.IsNotExist(err) {
+		return "", err
+	}
+
+	f, err := os.Open(fileName)
+	if err != nil {
+		log.Println(err)
+	}
+	defer f.Close()
+
+	var buffer []byte
+	bufScanner := bytes.NewBuffer(buffer)
+
+	dbCredentials := fmt.Sprintf("%s:%s:%s:%s:%s", a.Host, a.Port, a.Password, a.Username, a.DatabaseAlias)
+
+	scanner := bufio.NewScanner(f)
+
+	for scanner.Scan() {
+		line := scanner.Text()
+		if line != dbCredentials {
+			bufScanner.WriteString(line)
+			bufScanner.WriteString("\n")
+		}
+	}
+
+	if err := scanner.Err(); err != nil {
+		fmt.Println("Error scanning file for deletion:", err)
+	}
+
+	err = os.WriteFile(fileName, bufScanner.Bytes(), 0644)
+	if err != nil {
+		log.Println(err)
+		return "", err
+	}
+
+	return "Deleted!", nil
 }

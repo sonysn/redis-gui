@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"load-tester/functions"
 	"log"
@@ -38,7 +37,7 @@ func (a *App) TestWailsNet() []byte {
 	// return fmt.Sprintf("Hello %s, It's show time!", url)
 }
 
-func (a *App) ConnectToRedisDB(host string, port string, password string, username string, databaseAlias string) {
+func (a *App) ConnectToRedisDB(host string, port string, password string, username string, databaseAlias string, isSaved bool) {
 
 	login := &functions.RedisLogin{
 		Host:          host,
@@ -47,19 +46,40 @@ func (a *App) ConnectToRedisDB(host string, port string, password string, userna
 		Username:      username,
 		DatabaseAlias: databaseAlias,
 	}
-	functions.ConnectToRedis(login)
+	functions.ConnectToRedis(login, isSaved)
 	// fmt.Println("Connect to redis: ", name)
 }
 
-func (a *App) ReadDBCredentials() []byte {
+func (a *App) ReadDBCredentials() []functions.RedisLogin {
 	data := functions.ReadDBCredentials()
 
 	fmt.Println(data)
+	// data := map[string]string{
+	// 	"hello": "world",
+	// }
 
-	pd, err := json.Marshal(data)
-	if err != nil {
-		log.Println(err)
+	// pd, err := json.Marshal(data)
+	// if err != nil {
+	// 	log.Println(err)
+	// }
+
+	return data
+}
+
+func (a *App) DeleteDBCredentials(host string, port string, password string, username string, databaseAlias string, isSaved bool) string {
+
+	credentials := &functions.RedisLogin{
+		Host:          host,
+		Port:          port,
+		Password:      password,
+		Username:      username,
+		DatabaseAlias: databaseAlias,
 	}
 
-	return pd
+	msg, err := functions.DeleteDBCredentials(credentials)
+	if err != nil {
+		log.Println(err)
+		return "Error deleting DB credentials"
+	}
+	return msg
 }
