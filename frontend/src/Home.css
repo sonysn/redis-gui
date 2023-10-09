@@ -1,0 +1,24 @@
+h1 {
+    /* text-align: center; */
+    color: black;
+    font-size: 50px;
+    margin-bottom: 0;
+}
+
+button {
+    background-color: gray;
+    height: 50px;
+    margin: 1%;
+    font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+    border-color: white;
+    /* border-width: 0; */
+    border-radius: 2px;
+}
+
+.search {
+    height: 50px;
+    box-shadow: 0;
+    margin-left: 60%;
+}

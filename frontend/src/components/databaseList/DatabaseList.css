@@ -1,0 +1,19 @@
+/* DatabaseList.css */
+.DatabaseList {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+  }
+  
+  .database-info {
+    display: flex;
+    /* flex-direction: column; */
+    color: black;
+  }
+  
+  .database-info p {
+    margin: 25px;
+  }
+  
