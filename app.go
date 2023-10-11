@@ -37,7 +37,7 @@ func (a *App) TestWailsNet() []byte {
 	// return fmt.Sprintf("Hello %s, It's show time!", url)
 }
 
-func (a *App) ConnectToRedisDB(host string, port string, password string, username string, databaseAlias string, isSaved bool) {
+func (a *App) ConnectToRedisDB(host string, port string, password string, username string, databaseAlias string, isSaved bool) string {
 
 	login := &functions.RedisLogin{
 		Host:          host,
@@ -46,22 +46,19 @@ func (a *App) ConnectToRedisDB(host string, port string, password string, userna
 		Username:      username,
 		DatabaseAlias: databaseAlias,
 	}
-	functions.ConnectToRedis(login, isSaved)
+	res := functions.ConnectToRedis(login, isSaved)
 	// fmt.Println("Connect to redis: ", name)
+	return res
+}
+
+func (a *App) DisconnectFromRedisDB() {
+	functions.DisconnectFromRedis()
 }
 
 func (a *App) ReadDBCredentials() []functions.RedisLogin {
 	data := functions.ReadDBCredentials()
 
 	fmt.Println(data)
-	// data := map[string]string{
-	// 	"hello": "world",
-	// }
-
-	// pd, err := json.Marshal(data)
-	// if err != nil {
-	// 	log.Println(err)
-	// }
 
 	return data
 }
@@ -82,4 +79,19 @@ func (a *App) DeleteDBCredentials(host string, port string, password string, use
 		return "Error deleting DB credentials"
 	}
 	return msg
+}
+
+func (a *App) GetAllKeysAndTypeAndMemory() []functions.KeyData {
+	data := functions.GetAllKeysAndType()
+	return data
+}
+
+func (a *App) GetNumberOfKeys() string {
+	data := functions.GetNumberOfKeys()
+	return data
+}
+
+func (a *App) GetTotalDBSize() string {
+	data := functions.GetTotalDBUsedMemory()
+	return data
 }

@@ -1,13 +1,27 @@
 import React from 'react';
-// import {  } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import './DatabaseList.css'; // Import the CSS file
 import { ConnectToRedisDB, DeleteDBCredentials } from '../../../wailsjs/go/main/App';
 
 function DatabaseList(props) {
+    const navigate = useNavigate();
+    let isConnected = false;
 
-    function connect() {
+    async function connect() {
+        if (isConnected) {
+            return;
+        }
         const isSaved = true;
-        ConnectToRedisDB(props.databaseHost, props.databasePort, props.databasePassword, props.databaseUsername, props.databaseAlias, isSaved);
+        const res = await ConnectToRedisDB(props.databaseHost, props.databasePort, props.databasePassword, props.databaseUsername, props.databaseAlias, isSaved);
+        if (res === "Connected to Redis!") {
+            navigate('/dbHome', { state: { databaseAlias: props.databaseAlias } });
+            isConnected = true;
+            console.log("This is res", res);
+        } else {
+            alert("An error occurred. Please try again.: ", res);
+            console.log("This is res", res);
+        }
+        // navigate('/dbHome', { state: { databaseAlias: props.databaseAlias } });
     }
 
     async function deleteDBCredentials() {
