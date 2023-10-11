@@ -21,12 +21,12 @@ function AddNewDB() {
     return (
         <form id="ms-form">
             <h2>Create New Connection</h2>
-            <input type="text" className="Host" placeholder="Host" required />
-            <input type="text" className="Port" placeholder="Port" required />
-            <input type="text" className="DatabaseA" placeholder="Database Alias" required />
-            <input type="text" className="username" placeholder="username" />
-            <input type="text" className="password" placeholder="password" />
-            <button onClick={connect}>Connect</button>
+            <input type="text" className="Host mr-3 p-1 text-black" placeholder="Host" required/>
+            <input type="text" className="Port mr-3 p-1 text-black" placeholder="Port" required />
+            <input type="text" className="DatabaseA mr-3 p-1 text-black" placeholder="Database Alias" required />
+            <input type="text" className="username mr-3 p-1 text-black" placeholder="username" />
+            <input type="text" className="password mr-3 p-1 text-black" placeholder="password" />
+            <button className="mt-3 bg-violet-500 p-3 rounded hover:bg-violet-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300" onClick={connect}>Connect</button>
         </form>
     )
 }

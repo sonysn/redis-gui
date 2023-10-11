@@ -23,8 +23,10 @@ function Home() {
     return (
         <div>
             <h1>My Redis Databases</h1>
-            <button>+ ADD REDIS DATABASE</button>
-            <textarea className='search'></textarea>
+            <div className="grid grid-cols-2 justify-between">
+                <button className="bg-violet-500 p-4 rounded hover:bg-violet-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300">+ ADD REDIS DATABASE</button>
+                <textarea className='search'></textarea>
+            </div>
             {dataMap.map(dataMap => {
                 return <DatabaseList databaseAlias={dataMap.DatabaseAlias} databaseHostNPort={dataMap.Host + ":" + dataMap.Port} databasePassword={dataMap.Password} databaseUsername={dataMap.Username} databaseHost={dataMap.Host} databasePort={dataMap.Port} />
             })}
