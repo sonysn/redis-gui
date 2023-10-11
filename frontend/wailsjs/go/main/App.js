@@ -10,6 +10,22 @@ export function DeleteDBCredentials(arg1, arg2, arg3, arg4, arg5, arg6) {
   return window['go']['main']['App']['DeleteDBCredentials'](arg1, arg2, arg3, arg4, arg5, arg6);
 }
 
+export function DisconnectFromRedisDB() {
+  return window['go']['main']['App']['DisconnectFromRedisDB']();
+}
+
+export function GetAllKeysAndType() {
+  return window['go']['main']['App']['GetAllKeysAndType']();
+}
+
+export function GetNumberOfKeys() {
+  return window['go']['main']['App']['GetNumberOfKeys']();
+}
+
+export function GetTotalDBSize() {
+  return window['go']['main']['App']['GetTotalDBSize']();
+}
+
 export function Greet(arg1) {
   return window['go']['main']['App']['Greet'](arg1);
 }
