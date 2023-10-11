@@ -14,8 +14,8 @@ export function DisconnectFromRedisDB() {
   return window['go']['main']['App']['DisconnectFromRedisDB']();
 }
 
-export function GetAllKeysAndType() {
-  return window['go']['main']['App']['GetAllKeysAndType']();
+export function GetAllKeysAndTypeAndMemory() {
+  return window['go']['main']['App']['GetAllKeysAndTypeAndMemory']();
 }
 
 export function GetNumberOfKeys() {

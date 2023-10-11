@@ -81,7 +81,7 @@ func (a *App) DeleteDBCredentials(host string, port string, password string, use
 	return msg
 }
 
-func (a *App) GetAllKeysAndType() []map[string]string {
+func (a *App) GetAllKeysAndTypeAndMemory() []functions.KeyData {
 	data := functions.GetAllKeysAndType()
 	return data
 }

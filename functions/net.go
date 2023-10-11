@@ -88,22 +88,34 @@ func DisconnectFromRedis() {
 	}
 }
 
-func GetAllKeysAndType() []map[string]string {
+type KeyData struct {
+	Type       string
+	Key        string
+	MemorySize string
+}
+
+func GetAllKeysAndType() []KeyData {
 	keys, err := RedisConn.Keys("*").Result()
 	if err != nil {
 		log.Println(err)
 	}
 
-	var keysArray []map[string]string
+	var keysArray []KeyData
 
 	for _, key := range keys {
 		keyType, err := RedisConn.Type(key).Result()
 		if err != nil {
-			log.Fatal(err)
+			log.Println(err)
 		}
 
-		data := map[string]string{
-			keyType: key,
+		// data := map[string]string{
+		// 	keyType: key,
+		// }
+
+		data := KeyData{
+			Type:       keyType,
+			Key:        key,
+			MemorySize: getMemorySizeOfKey(key),
 		}
 
 		keysArray = append(keysArray, data)
@@ -118,14 +130,7 @@ func GetNumberOfKeys() string {
 		log.Println(err)
 	}
 
-	if len(keys) == 0 {
-		return "No Keys"
-	}
-	if len(keys) == 1 {
-		return "1 Key"
-	}
-
-	return fmt.Sprintf("%d Keys", len(keys))
+	return fmt.Sprintf("%d", len(keys))
 }
 
 func GetTotalDBUsedMemory() string {
@@ -154,4 +159,10 @@ func calculateSize(size int64) string {
 	} else {
 		return fmt.Sprintf("%.2f GB", float64(size)/(1024*1024*1024))
 	}
+}
+
+func getMemorySizeOfKey(key string) string {
+	info, _ := RedisConn.MemoryUsage(key).Result()
+
+	return calculateSize(info)
 }

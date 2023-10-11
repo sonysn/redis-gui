@@ -8,7 +8,7 @@ export function DeleteDBCredentials(arg1:string,arg2:string,arg3:string,arg4:str
 
 export function DisconnectFromRedisDB():Promise<void>;
 
-export function GetAllKeysAndType():Promise<Array<{[key: string]: string}>>;
+export function GetAllKeysAndTypeAndMemory():Promise<Array<functions.KeyData>>;
 
 export function GetNumberOfKeys():Promise<string>;
 
